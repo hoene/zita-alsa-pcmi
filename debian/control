@@ -1,0 +1,60 @@
+Source: zita-alsa-pcmi
+Section: sound
+Priority: optional
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Uploaders:
+ Jaromír Mikeš <mira.mikes@seznam.cz>
+Build-Depends:
+ debhelper (>= 8.1.3~),
+ libasound2-dev
+Standards-Version: 3.9.2
+Vcs-Git: git://git.debian.org/git/pkg-multimedia/zita-alsa-pcmi.git
+Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/zita-alsa-pcmi.git
+Homepage: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
+
+Package: libzita-alsa-pcmi-dev
+Section: libdevel
+Architecture: any
+Depends:
+ libzita-alsa-pcmi0 (= ${binary:Version}),
+ ${misc:Depends},
+ libfftw3-dev (>= 3.1.2-3.1)
+Multi-Arch: same
+Description: Development files (headers) for libzita-alsa-pcmi library
+ Zita-alsa-pcmi is a C++ wrapper around the ALSA API
+ a successor of clalsadrv library.
+ It provides easy access to ALSA PCM devices,
+ taking care of the many functions required to open,
+ initialise and use a hw: device in mmap mode,
+ and providing floating point audio data.
+ .
+ This package contains the headers used to build applications
+ that use libzita-alsa-pcmi.
+
+Package: libzita-alsa-pcmi0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends},
+ ${misc:Depends}
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: C++ wrapper around the ALSA API
+ Zita-alsa-pcmi is the successor of clalsadrv library.
+ It provides easy access to ALSA PCM devices,
+ taking care of the many functions required to open,
+ initialise and use a hw: device in mmap mode,
+ and providing floating point audio data.
+ .
+ This package contains the shared library for libzita-alsa-pcmi.
+
+#Package: libzita-alsa-pcmi-utils
+#Architecture: any
+#Depends:
+# libzita-alsa-pcmi0 (= ${binary:Version}),
+# ${misc:Depends},
+# ${shlibs:Depends}
+#Description: Two simple demo programs zita-alsa-pcmi library 
+# Two simple demo programs are provided.
+# alsa_delay a ALSA version of jack_delay.
+# And alsa_loopback
+

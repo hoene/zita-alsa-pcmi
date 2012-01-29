@@ -1,0 +1,5 @@
+zita-alsa-pcmi (0.1.1-1) UNRELEASED; urgency=low
+
+  * Initial release (Closes: #657861)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Sun, 29 Jan 2012 17:29:03 +0100

@@ -1,0 +1,32 @@
+Description: 
+ Patch is applied to set PREFIX, LIBDIR and DESTDIR by rules file.
+ Also fixing ldconfig
+Author: Jaromír Mikeš <mira.mikes@seznam.cz>
+Forwarded: no
+
+Index: zita-alsa-pcmi-0.1.1/libs/Makefile
+===================================================================
+--- zita-alsa-pcmi-0.1.1.orig/libs/Makefile	2012-01-30 01:30:00.103722685 +0100
++++ zita-alsa-pcmi-0.1.1/libs/Makefile	2012-01-30 01:30:03.000000000 +0100
+@@ -20,9 +20,9 @@
+ 
+ # Modify as required.
+ #
+-PREFIX = /usr/local
++PREFIX ?= /usr/local
+ SUFFIX := $(shell uname -m | sed -e 's/^unknown/$//' -e 's/^i.86/$//' -e 's/^x86_64/$/64/')
+-LIBDIR = lib$(SUFFIX)
++LIBDIR ?= lib$(SUFFIX)
+ 
+ 
+ MAJVERS = 0
+@@ -52,7 +52,7 @@
+ 	install -Dm 644 $(ZITA-ALSA-PCMI_H)   $(DESTDIR)$(PREFIX)/include/$(ZITA-ALSA-PCMI_H)
+ 	install -Dm 644 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_MIN)
+ 	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
+-	ldconfig
++	/sbin/ldconfig -n $(DESTDIR)$(PREFIX)/$(LIBDIR)
+ 
+ uninstall:
+ 	rm -rf $(DESTDIR)$(PREFIX)/include/zita-alsa-pcmi.h
+
