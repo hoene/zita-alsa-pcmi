@@ -1,0 +1,32 @@
+Zita-alsa-pcmi is the successor of clalsadrv. It provides easy access
+to ALSA PCM devices, taking care of the many functions required to
+open, initialise and use a hw: device in mmap mode, and providing
+floating point audio data. 
+
+
+Release 0.1.1  (26/01/2012)
+---------------------------
+
+* This release is almost API compatible with clalsadrv-2.x.x.
+  The only changes your source code will need are:
+
+  - Change the include file.
+  - Change the type of any interface objects.
+  - Replace calls to stat() by state(). 
+  - If you want error reporting on stderr, add an optional
+    parameter to the constructor. See include file for details.
+
+* Added support for big-endian PCM formats.
+
+* Added support for reading and writing interleaved user buffers.
+
+* Error messages on stderr can be selectively enabled. If an app
+  is compiled without them, they can be re-enabled at runtime by
+  defining the environment variable ZITA_ALSA_PCMI_DEBUG, so they
+  are now by default off. See source code for details.
+
+* Two simple demo programs are provided, one of them is the ALSA
+  version of jack_delay. Complete documentation will follow later.
+
+-- 
+FA
