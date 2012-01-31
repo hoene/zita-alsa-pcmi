@@ -6,16 +6,17 @@ export LIBDIR=lib/$(DEB_HOST_MULTIARCH)
 export DESTDIR=$(CURDIR)/debian/tmp
 
 %:
-	dh $@ -Smakefile -Dlibs
+	dh $@ -Smakefile
 
-#override_dh_auto_clean:
-#	dh_auto_clean
-#	$(MAKE) -C apps/ clean
-#
-#override_dh_auto_install:
-#	dh_auto_install
-#	$(MAKE) -C apps/ DESTDIR=$(CURDIR)/debian/tmp
-#	$(MAKE) -C apps/ DESTDIR=$(CURDIR)/debian/tmp install
-#
+override_dh_auto_clean:
+	dh_auto_clean
+	$(MAKE) -C libs/ clean
+	$(MAKE) -C apps/ clean
+
+override_dh_auto_install:
+	dh_auto_install
+	$(MAKE) -C libs/ DESTDIR=$(CURDIR)/debian/tmp
+	$(MAKE) -C apps/ DESTDIR=$(CURDIR)/debian/tmp install
+
 override_dh_installchangelogs:
 	dh_installchangelogs README

@@ -16,9 +16,10 @@ Package: libzita-alsa-pcmi-dev
 Section: libdevel
 Architecture: any
 Depends:
+ libfftw3-dev (>= 3.1.2-3.1),
  libzita-alsa-pcmi0 (= ${binary:Version}),
  ${misc:Depends},
- libfftw3-dev (>= 3.1.2-3.1)
+ ${shlibs:Depends}
 Multi-Arch: same
 Description: Development files (headers) for libzita-alsa-pcmi library
  Zita-alsa-pcmi is a C++ wrapper around the ALSA API
@@ -34,8 +35,9 @@ Description: Development files (headers) for libzita-alsa-pcmi library
 Package: libzita-alsa-pcmi0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends},
- ${misc:Depends}
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Description: C++ wrapper around the ALSA API
@@ -47,13 +49,13 @@ Description: C++ wrapper around the ALSA API
  .
  This package contains the shared library for libzita-alsa-pcmi.
 
-#Package: libzita-alsa-pcmi-utils
-#Architecture: any
-#Depends:
-# libzita-alsa-pcmi0 (= ${binary:Version}),
-# ${misc:Depends},
-# ${shlibs:Depends}
-#Description: Two simple demo programs zita-alsa-pcmi library 
-# Two simple demo programs are provided.
-# alsa_delay a ALSA version of jack_delay.
-# And alsa_loopback
+Package: libzita-alsa-pcmi-utils
+Architecture: any
+Depends:
+ libzita-alsa-pcmi0 (= ${binary:Version}),
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: Two simple demo programs zita-alsa-pcmi library
+ Two simple demo programs are provided.
+ alsa_delay a ALSA version of jack_delay.
+ And alsa_loopback
