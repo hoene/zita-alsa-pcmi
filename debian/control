@@ -57,4 +57,3 @@ Description: C++ wrapper around the ALSA API
 # Two simple demo programs are provided.
 # alsa_delay a ALSA version of jack_delay.
 # And alsa_loopback
-
