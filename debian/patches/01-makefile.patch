@@ -4,10 +4,12 @@ Description:
 Author: Jaromír Mikeš <mira.mikes@seznam.cz>
 Forwarded: no
 
-Index: zita-alsa-pcmi-0.1.1/libs/Makefile
-===================================================================
---- zita-alsa-pcmi-0.1.1.orig/libs/Makefile	2012-01-30 01:30:00.103722685 +0100
-+++ zita-alsa-pcmi-0.1.1/libs/Makefile	2012-01-30 01:30:03.000000000 +0100
+---
+ libs/Makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- zita-alsa-pcmi.orig/libs/Makefile
++++ zita-alsa-pcmi/libs/Makefile
 @@ -20,9 +20,9 @@
  
  # Modify as required.
@@ -20,7 +22,7 @@ Index: zita-alsa-pcmi-0.1.1/libs/Makefile
  
  
  MAJVERS = 0
-@@ -52,7 +52,7 @@
+@@ -52,7 +52,7 @@ install:	$(ZITA-ALSA-PCMI_MIN)
  	install -Dm 644 $(ZITA-ALSA-PCMI_H)   $(DESTDIR)$(PREFIX)/include/$(ZITA-ALSA-PCMI_H)
  	install -Dm 644 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_MIN)
  	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
@@ -29,4 +31,3 @@ Index: zita-alsa-pcmi-0.1.1/libs/Makefile
  
  uninstall:
  	rm -rf $(DESTDIR)$(PREFIX)/include/zita-alsa-pcmi.h
-
