@@ -8,6 +8,10 @@ export DESTDIR=$(CURDIR)/debian/tmp
 %:
 	dh $@ -Smakefile
 
+override_dh_auto_build:
+	$(MAKE) -C libs/
+	$(MAKE) -C apps/
+
 override_dh_auto_clean:
 	dh_auto_clean
 	$(MAKE) -C libs/ clean
