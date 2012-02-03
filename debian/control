@@ -50,7 +50,7 @@ Description: C++ wrapper around the ALSA API
  .
  This package contains the shared library for libzita-alsa-pcmi.
 
-Package: libzita-alsa-pcmi-utils
+Package: zita-alsa-pcmi-utils
 Architecture: any
 Depends:
  libzita-alsa-pcmi0 (= ${binary:Version}),
