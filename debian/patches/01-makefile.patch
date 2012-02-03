@@ -5,8 +5,9 @@ Author: Jaromír Mikeš <mira.mikes@seznam.cz>
 Forwarded: no
 
 ---
+ apps/Makefile |    4 ++--
  libs/Makefile |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 --- zita-alsa-pcmi.orig/libs/Makefile
 +++ zita-alsa-pcmi/libs/Makefile
@@ -31,3 +32,17 @@ Forwarded: no
  
  uninstall:
  	rm -rf $(DESTDIR)$(PREFIX)/include/zita-alsa-pcmi.h
+--- zita-alsa-pcmi.orig/apps/Makefile
++++ zita-alsa-pcmi/apps/Makefile
+@@ -19,9 +19,9 @@
+ # ----------------------------------------------------------------------------
+ 
+ 
+-PREFIX = /usr/local
++PREFIX ?= /usr/local
+ SUFFIX := $(shell uname -m | sed -e 's/^unknown/$//' -e 's/^i.86/$//' -e 's/^x86_64/$/64/')
+-LIBDIR = lib$(SUFFIX)
++LIBDIR ?= lib$(SUFFIX)
+ VERSION = "0.1.0"
+ LDFLAGS += -L$(PREFIX)/$(LIBDIR)
+ CPPFLAGS += -DVERSION=\"$(VERSION)\"
