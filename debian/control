@@ -53,7 +53,6 @@ Description: C++ wrapper around the ALSA API
 Package: zita-alsa-pcmi-utils
 Architecture: any
 Depends:
- libzita-alsa-pcmi0 (= ${binary:Version}),
  ${misc:Depends},
  ${shlibs:Depends}
 Description: Two simple demo programs zita-alsa-pcmi library
