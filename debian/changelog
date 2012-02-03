@@ -1,4 +1,4 @@
-zita-alsa-pcmi (0.1.1-1) UNRELEASED; urgency=low
+zita-alsa-pcmi (0.1.1-1) unstable; urgency=low
 
   * Initial release (Closes: #657861)
 
