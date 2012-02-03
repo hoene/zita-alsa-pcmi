@@ -5,7 +5,7 @@
 --- zita-alsa-pcmi.orig/apps/Makefile
 +++ zita-alsa-pcmi/apps/Makefile
 @@ -24,7 +24,7 @@ SUFFIX := $(shell uname -m | sed -e 's/^
- LIBDIR = lib$(SUFFIX)
+ LIBDIR ?= lib$(SUFFIX)
  VERSION = "0.1.0"
  LDFLAGS += -L$(PREFIX)/$(LIBDIR)
 -CPPFLAGS += -DVERSION=\"$(VERSION)\"
