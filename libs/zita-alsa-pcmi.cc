@@ -622,7 +622,7 @@ void Alsa_pcmi::initialise (const char *play_name, const char *capt_name, const 
             break;
 
         case SND_PCM_FORMAT_S24_3BE:
-            _capt_func  = &Alsa_pcmi::capt_24p;     
+            _capt_func  = &Alsa_pcmi::capt_24;     
             break;
 
         case SND_PCM_FORMAT_S16_LE:
