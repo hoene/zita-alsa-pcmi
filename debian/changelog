@@ -1,6 +1,11 @@
 zita-alsa-pcmi (0.1.2-1) unstable; urgency=low
 
+  [ Jaromír Mikeš ]
   * New upstream release
+
+  [ Alessio Treglia ]
+  * Add DM-Upload-Allowed: yes.
+  * This release should fix FTBFS on most architectures.
 
  -- Jaromír Mikeš <mira.mikes@seznam.cz>  Mon, 06 Feb 2012 14:34:50 +0100
 
