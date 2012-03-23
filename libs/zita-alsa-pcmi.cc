@@ -656,41 +656,50 @@ void Alsa_pcmi::initialise (const char *play_name, const char *capt_name, const 
 
 int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const char *sname, unsigned int *nchan)
 {
-    int  err;
+    bool err;
 
-    if ((err = snd_pcm_hw_params_any (handle, hwpar)) < 0)
+    if (snd_pcm_hw_params_any (handle, hwpar) < 0)
     {
-        if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: no %s hw configurations available: %s.\n",
-                                          sname, snd_strerror (err));
+        if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: no %s hw configurations available.\n",
+                                          sname);
         return -1;
     }
-    if ((err = snd_pcm_hw_params_set_periods_integer (handle, hwpar)) < 0)
+    if (snd_pcm_hw_params_set_periods_integer (handle, hwpar) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s period size to integral value.\n",
                                           sname);
         return -1;
     }
-    if (   ((err = snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_NONINTERLEAVED)) < 0)
-        && ((err = snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_INTERLEAVED)) < 0)
-        && ((err = snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_COMPLEX)) < 0))
+    if (   (snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_NONINTERLEAVED) < 0)
+        && (snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_INTERLEAVED) < 0)
+        && (snd_pcm_hw_params_set_access (handle, hwpar, SND_PCM_ACCESS_MMAP_COMPLEX) < 0))
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: the %s interface doesn't support mmap-based access.\n",
                                           sname);
         return -1;
     }
-    if (   ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_FLOAT_LE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_LE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_BE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3LE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3BE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE)) < 0)
-        && ((err = snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE)) < 0))
+    if (_debug & FORCE_16B)
+    {
+	err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
+	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
+    }
+    else
+    {
+    	err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_FLOAT_LE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_LE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_BE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3LE) < 0)
+  	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3BE) < 0)
+	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
+	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
+    }
+    if (err)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: no supported sample format on %s interface.\n.",
                                           sname);
         return -1;
     }
-    if ((err = snd_pcm_hw_params_set_rate (handle, hwpar, _fsamp, 0)) < 0)
+    if (snd_pcm_hw_params_set_rate (handle, hwpar, _fsamp, 0) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s sample rate to %u.\n",
                                           sname, _fsamp);
@@ -703,37 +712,42 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const 
                                          sname);
         *nchan = 2;     
     }                           
+    if (_debug & FORCE_2CH) 
+    {
+	*nchan = 2;
+    }
     if (*nchan > MAXCHAN)
     { 
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: number of %s channels reduced to %d.\n",
                                          sname, MAXCHAN);
         *nchan = MAXCHAN;     
     }                           
-    if ((err = snd_pcm_hw_params_set_channels (handle, hwpar, *nchan)) < 0)
+
+    if (snd_pcm_hw_params_set_channels (handle, hwpar, *nchan) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s channel count to %u.\n",
                                           sname, *nchan);
         return -1;
     }
-    if ((err = snd_pcm_hw_params_set_period_size (handle, hwpar, _fsize, 0)) < 0)
+    if (snd_pcm_hw_params_set_period_size (handle, hwpar, _fsize, 0) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s period size to %lu.\n",
                                           sname, _fsize);
         return -1;
     }
-    if ((err = snd_pcm_hw_params_set_periods (handle, hwpar, _nfrag, 0)) < 0)
+    if (snd_pcm_hw_params_set_periods (handle, hwpar, _nfrag, 0) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s periods to %u.\n",
                                  sname, _nfrag);
         return -1;
     }
-    if ((err = snd_pcm_hw_params_set_buffer_size (handle, hwpar, _fsize * _nfrag)) < 0)
+    if (snd_pcm_hw_params_set_buffer_size (handle, hwpar, _fsize * _nfrag) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s buffer length to %lu.\n",
                                           sname, _fsize * _nfrag);
         return -1;
     }
-    if ((err = snd_pcm_hw_params (handle, hwpar)) < 0)
+    if (snd_pcm_hw_params (handle, hwpar) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s hardware parameters.\n",
                                           sname);

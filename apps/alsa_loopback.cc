@@ -57,13 +57,13 @@ void Audiothr::thr_main (void)
     {
 	fprintf (stderr, "Can't open ALSA device\n");
         delete D;
-        return;
+        exit (1);
     }
     if ((D->ncapt () < 2) || (D->nplay () < 2))
     {
 	fprintf (stderr, "Expected a stereo device.\n");
         delete D;
-        return;
+        exit (1);
     }
     D->printinfo ();
 

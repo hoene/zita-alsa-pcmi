@@ -28,7 +28,7 @@
 
 
 #define ZITA_ALSA_PCMI_MAJOR_VERSION 0
-#define ZITA_ALSA_PCMI_MINOR_VERSION 1
+#define ZITA_ALSA_PCMI_MINOR_VERSION 2
 
 
 extern int zita_alsa_pcmi_major_version (void);
@@ -54,7 +54,10 @@ public:
 	DEBUG_INIT = 1,
 	DEBUG_STAT = 2,
 	DEBUG_WAIT = 4,
-	DEBUG_DATA = 8
+	DEBUG_DATA = 8,
+	DEBUG_ALL  = 15,
+	FORCE_16B  = 256,
+	FORCE_2CH  = 512
     };
 
     void printinfo (void);
