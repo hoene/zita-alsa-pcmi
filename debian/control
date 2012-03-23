@@ -9,7 +9,7 @@ Build-Depends:
  debhelper (>= 9),
  libasound2-dev
 DM-Upload-Allowed: yes
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Vcs-Git: git://git.debian.org/git/pkg-multimedia/zita-alsa-pcmi.git
 Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/zita-alsa-pcmi.git
 Homepage: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
