@@ -1,4 +1,4 @@
-Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=202
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Zita-alsa-pcmi
 Upstream-Contact: Fons Adriaensen <fons@linuxaudio.org>
 Source: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
@@ -21,8 +21,9 @@ License: GPL-3+
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-Comment: You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
- .
+Comment:
  On Debian systems, the complete text of the GNU General Public
  License can be found in the file `/usr/share/common-licenses/GPL-3'.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
