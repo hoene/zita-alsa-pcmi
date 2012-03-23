@@ -75,7 +75,7 @@ Audiothr::Audiothr (const char *playdev, const char *captdev, int fsamp, int frs
     {
 	fprintf (stderr, "Can't open ALSA device\n");
         delete _pcmi;
-        return;
+        exit (0);
     }
     _pcmi->printinfo ();
     _stop = false;
