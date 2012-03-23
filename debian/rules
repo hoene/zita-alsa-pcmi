@@ -24,7 +24,3 @@ override_dh_auto_install:
 
 override_dh_installchangelogs:
 	dh_installchangelogs README
-
-override_dh_makeshlibs:
-	dh_makeshlibs -plibzita-alsa-pcmi0 -V 'libzita-alsa-pcmi0 (>= 0.1.1)'
-	dh_makeshlibs --remaining-packages

@@ -1,0 +1,41 @@
+libzita-alsa-pcmi.so.0 libzita-alsa-pcmi0 #MINVER#
+ (c++)"zita_alsa_pcmi_major_version()@Base" 0.2.0
+ (c++)"zita_alsa_pcmi_minor_version()@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_float(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::clear_chan(int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::initialise(char const*, char const*, char const*)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_float(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_16swap(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_24swap(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_32swap(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_16swap(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_24swap(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_32swap(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_16(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_24(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_32(char const*, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_16(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_24(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_32(float const*, char*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::recover()@Base" 0.2.0
+ (c++)"Alsa_pcmi::clear_16(char*, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::clear_24(char*, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::clear_32(char*, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::pcm_idle(int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::pcm_stop()@Base" 0.2.0
+ (c++)"Alsa_pcmi::pcm_wait()@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_chan(int, float*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_done(int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::capt_init(unsigned long)@Base" 0.2.0
+ (c++)"Alsa_pcmi::pcm_start()@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_chan(int, float const*, int, int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_done(int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::play_init(unsigned long)@Base" 0.2.0
+ (c++)"Alsa_pcmi::printinfo()@Base" 0.2.0
+ (c++)"Alsa_pcmi::set_hwpar(_snd_pcm*, _snd_pcm_hw_params*, char const*, unsigned int*)@Base" 0.2.0
+ (c++)"Alsa_pcmi::set_swpar(_snd_pcm*, _snd_pcm_sw_params*, char const*)@Base" 0.2.0
+ (c++)"Alsa_pcmi::xruncheck(_snd_pcm_status*)@Base" 0.2.0
+ (c++)"Alsa_pcmi::Alsa_pcmi(char const*, char const*, char const*, unsigned int, unsigned int, unsigned int, unsigned int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::Alsa_pcmi(char const*, char const*, char const*, unsigned int, unsigned int, unsigned int, unsigned int)@Base" 0.2.0
+ (c++)"Alsa_pcmi::~Alsa_pcmi()@Base" 0.2.0
+ (c++)"Alsa_pcmi::~Alsa_pcmi()@Base" 0.2.0
