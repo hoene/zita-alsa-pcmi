@@ -1,0 +1,22 @@
+--- zita-alsa-pcmi.orig/apps/alsa_delay.cc
++++ zita-alsa-pcmi/apps/alsa_delay.cc
+@@ -146,7 +146,7 @@
+ 
+     if (ac < 6)
+     {
+-	fprintf (stderr, "alsa-latency <playdev><captdev><fsamp><frsize><nfrags>\n");
++	fprintf (stderr, "%s <playdev> <captdev> <fsamp> <frsize> <nfrags>\n", av[0]);
+         return 1;
+     }
+ 
+--- zita-alsa-pcmi.orig/apps/alsa_loopback.cc
++++ zita-alsa-pcmi/apps/alsa_loopback.cc
+@@ -103,7 +103,7 @@
+ 
+     if (ac < 6)
+     {
+-	fprintf (stderr, "alsa-loopback <playdev><captdev><fsamp><frsize><nfrags>\n");
++	fprintf (stderr, "%s <playdev> <captdev> <fsamp> <frsize> <nfrags>\n", av[0]);
+         return 1;
+     }
+ 
