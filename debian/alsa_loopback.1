@@ -1,0 +1,50 @@
+.TH zita-alsa-pcmi "1" "July 2013"
+.SH NAME
+alsa_loopback \- loop back the first two channels of a alsa device to another device
+.SH SYNOPSIS
+.B alsa_loopback
+.RI playdev
+.RI captdev
+.RI fsamp
+.RI frsize
+.RI nfrags
+.SH DESCRIPTION
+This tool is mainly for testing whether a given soundcard works with the
+.BR zita-alsa-pcmi
+library.
+It will send the 1st two channels of the given capture device
+to the playback device, using the specified settings.
+.PP
+Note, that this might give massive (ear and equipment damaging) feedback
+if your capture device is connected to a microphone near some speakers
+connected to the playback device.
+.SH ARGUMENTS
+.TP
+\fBplaydev\fR
+ALSA playback device (e.g.: hw:0)
+.TP
+\fBcaptdev\fR
+ALSA capture device (e.g.: hw:0)
+.TP
+\fBfsamp\fR
+Sample rate (e.g.: 48000)
+.TP
+\fBfrsize\fR
+Period size (e.g.: 256)
+.TP
+\fBnfrags\fR
+Number of fragments (e.g.: 2)
+.SH EXAMPLES
+This will loopback the 1st two channels of
+.BR hw:0
+to 
+.BR hw:1
+using 48kHz samplerate, and 10 fragments each 2048 samples.
+.nf
+  alsa_loopback hw:0 hw:1 48000 2048 10
+.fi
+.SH "AUTHOR"
+zita-alsa-pcmi was written by Fons Adriaensen <fons@linuxaudio.org>.
+.PP
+This manual page was written by IOhannes m zmoelnig <zmoelnig@iem.at>
+for the Debian project (but may be used by others).

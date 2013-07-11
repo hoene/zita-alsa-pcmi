@@ -1,0 +1,56 @@
+.TH zita-alsa-pcmi "1" "July 2013"
+.SH NAME
+alsa_delay \- measure round-trip latency of a soundcard
+.SH SYNOPSIS
+.B alsa_delay
+.RI playdev
+.RI captdev
+.RI fsamp
+.RI frsize
+.RI nfrags
+.SH DESCRIPTION
+This tool can be used to measure the round-trip latency of a soundcard.
+To do this, start the program and connect like this:
+.nf
+  alsa_delay -> playdev -> cable from soundcard output to input -> captdev -> alsa_delay
+.fi
+.PP
+.BR alsa_delay
+should be able to measure the round-trip latency with an accuracy of
+around 1/1000 of a sample.
+The assumption is, that the latency is more or less independent of frequency,
+and that the cable between soundcard output and input has virtually zero
+latency.
+.SH ARGUMENTS
+.TP
+\fBplaydev\fR
+ALSA playback device (e.g.: hw:0)
+.TP
+\fBcaptdev\fR
+ALSA capture device (e.g.: hw:0)
+.TP
+\fBfsamp\fR
+Sample rate (e.g.: 48000)
+.TP
+\fBfrsize\fR
+Period size (e.g.: 256)
+.TP
+\fBnfrags\fR
+Number of fragments (e.g.: 2)
+.SH EXAMPLES
+This will measure and display the round-trip latency of soundcard
+.BR hw:0
+using 48kHz samplerate, and 10 fragments each 2048 samples.
+.nf
+  alsa_delay hw:0 hw:0 48000 2048 10
+.fi
+.SH NOTES
+.BR alsa_delay
+is a port of
+.BR jack_delay
+(by the same author) to ALSA.
+.SH "AUTHOR"
+zita-alsa-pcmi was written by Fons Adriaensen <fons@linuxaudio.org>.
+.PP
+This manual page was written by IOhannes m zmoelnig <zmoelnig@iem.at>
+for the Debian project (but may be used by others).
