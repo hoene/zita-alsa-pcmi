@@ -1,3 +1,8 @@
+Author: IOhannes m zmölnig
+Description: fixing the 'usage' printout
+ by using the actual programname (rather than hardcoding a wrong one)
+ and adding spaces between the required arguments (so it's clear they
+ are multiple strings, and not just a single big string)
 --- zita-alsa-pcmi.orig/apps/alsa_delay.cc
 +++ zita-alsa-pcmi/apps/alsa_delay.cc
 @@ -146,7 +146,7 @@
