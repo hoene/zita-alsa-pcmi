@@ -1,6 +1,17 @@
-zita-alsa-pcmi (0.2.0-2) UNRELEASED; urgency=low
+zita-alsa-pcmi (0.2.0-2) unstable; urgency=low
 
-  * Start new upload
+  [ Alessio Treglia ]
+  * Add symbols file, don't use static shlibs anymore.
+
+  [ IOhannes m zmoelnig ]
+  * Adding manpages (Closes: #716677)
+  * Fix usage-message of sample-applications.
+  * Use canonical Vcs-* stanzas.
+
+  [ Jaromír Mikeš ]
+  * Removed DMUA.
+  * Bump Standards.
+  * Added local-options file.
 
  -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 06 Aug 2013 10:56:12 +0200
 
