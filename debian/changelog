@@ -1,3 +1,10 @@
+zita-alsa-pcmi (0.2.0-3) unstable; urgency=medium
+
+  * Team upload.
+  * Remove myself from the Uploaders field.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 01 Nov 2016 18:44:57 +0000
+
 zita-alsa-pcmi (0.2.0-2) unstable; urgency=low
 
   [ Alessio Treglia ]
