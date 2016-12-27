@@ -7,8 +7,8 @@ Build-Depends:
  debhelper (>= 10),
  libasound2-dev
 Standards-Version: 3.9.4
-Vcs-Git: git://anonscm.debian.org/pkg-multimedia/zita-alsa-pcmi.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-multimedia/zita-alsa-pcmi.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-multimedia/zita-alsa-pcmi.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-multimedia/zita-alsa-pcmi.git
 Homepage: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
 
 Package: libzita-alsa-pcmi-dev
