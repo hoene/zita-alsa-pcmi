@@ -18,7 +18,6 @@ Depends:
  libfftw3-dev (>= 3.1.2-3.1),
  libzita-alsa-pcmi0 (= ${binary:Version}),
  ${misc:Depends},
- ${shlibs:Depends}
 Multi-Arch: same
 Description: Development files (headers) for libzita-alsa-pcmi library
  Zita-alsa-pcmi is a C++ wrapper around the ALSA API
@@ -36,7 +35,7 @@ Section: libs
 Architecture: any
 Depends:
  ${misc:Depends},
- ${shlibs:Depends}
+ ${shlibs:Depends},
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Description: C++ wrapper around the ALSA API
@@ -52,7 +51,7 @@ Package: zita-alsa-pcmi-utils
 Architecture: any
 Depends:
  ${misc:Depends},
- ${shlibs:Depends}
+ ${shlibs:Depends},
 Description: Two simple demo programs zita-alsa-pcmi library
  Two simple demo programs are provided.
  alsa_delay a ALSA version of jack_delay.
