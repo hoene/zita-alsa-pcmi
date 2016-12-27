@@ -1,10 +1,14 @@
-zita-alsa-pcmi (0.2.0-4) UNRELEASED; urgency=medium
+zita-alsa-pcmi (0.2.0-4) unstable; urgency=medium
 
   * Set dh/compat 10.
   * Update copyright file.
   * Sign tags.
   * Fix VCS fields.
   * Bump Standards.
+  * Fix hardening.
+  * Avoid useless linking.
+  * Remove unused substitution variable.
+  * Add spelling patch.
 
  -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 27 Dec 2016 12:03:32 +0100
 
