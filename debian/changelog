@@ -1,3 +1,13 @@
+zita-alsa-pcmi (0.2.0-4) UNRELEASED; urgency=medium
+
+  * Set dh/compat 10.
+  * Update copyright file.
+  * Sign tags.
+  * Fix VCS fields.
+  * Bump Standards.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 27 Dec 2016 12:03:32 +0100
+
 zita-alsa-pcmi (0.2.0-3) unstable; urgency=medium
 
   * Team upload.
