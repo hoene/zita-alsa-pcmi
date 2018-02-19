@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Zita-alsa-pcmi
 Upstream-Contact: Fons Adriaensen <fons@linuxaudio.org>
 Source: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
