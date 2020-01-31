@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-//  Copyright (C) 2006-2012 Fons Adriaensen <fons@linuxaudio.org>
+//  Copyright (C) 2006-2018 Fons Adriaensen <fons@linuxaudio.org>
 //    
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -292,11 +292,12 @@ int Alsa_pcmi::capt_init (snd_pcm_uframes_t len)
         return -1;
     }
     _capt_step = (a->step) >> 3;
+
     for (i = 0; i < _capt_nchan; i++, a++)
     {
         _capt_ptr [i] = (char *) a->addr + ((a->first + a->step * _capt_offs) >> 3);
     } 
-   
+
     return len;
 }
 
@@ -586,11 +587,11 @@ void Alsa_pcmi::initialise (const char *play_name, const char *capt_name, const 
             _capt_func  = &Alsa_pcmi::capt_32swap;     
             break;
 
-        case SND_PCM_FORMAT_S24_3LE:
+        case SND_PCM_FORMAT_S24_3LE:  // 3 lower bytes of 32-bit word 
             _capt_func  = &Alsa_pcmi::capt_24;     
             break;
 
-        case SND_PCM_FORMAT_S24_3BE:
+        case SND_PCM_FORMAT_S24_3BE:  // 3 lower bytes of 32-bit word
             _capt_func  = &Alsa_pcmi::capt_24swap;     
             break;
 
@@ -617,11 +618,11 @@ void Alsa_pcmi::initialise (const char *play_name, const char *capt_name, const 
             _capt_func  = &Alsa_pcmi::capt_32;     
             break;
 
-        case SND_PCM_FORMAT_S24_3LE:
+        case SND_PCM_FORMAT_S24_3LE:  // 3 lower bytes of 32-bit word
             _capt_func  = &Alsa_pcmi::capt_24swap;     
             break;
 
-        case SND_PCM_FORMAT_S24_3BE:
+        case SND_PCM_FORMAT_S24_3BE:  // 3 lower bytes of 32-bit word
             _capt_func  = &Alsa_pcmi::capt_24;     
             break;
 
@@ -666,7 +667,7 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const 
     }
     if (snd_pcm_hw_params_set_periods_integer (handle, hwpar) < 0)
     {
-        if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s period size to integral value.\n",
+        if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s periods to integral value.\n",
                                           sname);
         return -1;
     }
@@ -680,18 +681,18 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const 
     }
     if (_debug & FORCE_16B)
     {
-	err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
-	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
+        err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
     }
     else
     {
-    	err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_FLOAT_LE) < 0)
+        err =    (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_FLOAT_LE) < 0)
               && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_LE) < 0)
               && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S32_BE) < 0)
               && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3LE) < 0)
-  	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3BE) < 0)
-	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
-	      && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S24_3BE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_LE) < 0)
+              && (snd_pcm_hw_params_set_format (handle, hwpar, SND_PCM_FORMAT_S16_BE) < 0);
     }
     if (err)
     {
@@ -714,7 +715,7 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const 
     }                           
     if (_debug & FORCE_2CH) 
     {
-	*nchan = 2;
+        *nchan = 2;
     }
     if (*nchan > MAXCHAN)
     { 
@@ -761,13 +762,19 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *handle,  snd_pcm_hw_params_t *hwpar, const 
 int Alsa_pcmi::set_swpar (snd_pcm_t *handle, snd_pcm_sw_params_t *swpar, const char *sname) 
 {
     int err;
-
+    
     snd_pcm_sw_params_current (handle, swpar);
 
     if ((err = snd_pcm_sw_params_set_tstamp_mode (handle, swpar, SND_PCM_TSTAMP_MMAP)) < 0)
     {
         if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s timestamp mode to %u.\n",
                                           sname, SND_PCM_TSTAMP_MMAP);
+        return -1;
+    }
+    if ((err = snd_pcm_sw_params_set_start_threshold (handle, swpar, 0)) < 0)
+    {
+        if (_debug & DEBUG_INIT) fprintf (stderr, "Alsa_pcmi: can't set %s start_threshold to 0.\n",
+                                          sname);
         return -1;
     }
     if ((err = snd_pcm_sw_params_set_avail_min (handle, swpar, _fsize)) < 0)

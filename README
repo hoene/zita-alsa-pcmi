@@ -1,7 +1,14 @@
-Zita-alsa-pcmi is the successor of clalsadrv. It provides easy access
-to ALSA PCM devices, taking care of the many functions required to
-open, initialise and use a hw: device in mmap mode, and providing
-floating point audio data. 
+Zita-alsa-pcmi provides easy access to ALSA PCM devices, taking
+care of the many operations required to open, initialise and use
+an ALSA hw: device in memory mapped mode. To applications PCM
+data appears as single precision floating point samples in the
+range -1.0 to 1.0f.
+
+
+Release 0.3.2  (25/08/2018)
+---------------------------
+
+Maintenance release.
 
 
 Release 0.1.1  (26/01/2012)

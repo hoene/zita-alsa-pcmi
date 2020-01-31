@@ -1,10 +1,10 @@
 // ----------------------------------------------------------------------------
 //
-//  Copyright (C) 2003-2012 Fons Adriaensen <fons@linuxaudio.org>
+//  Copyright (C) 2006-2018 Fons Adriaensen <fons@linuxaudio.org>
 //    
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
+//  the Free Software Foundation; either version 3 of the License, or
 //  (at your option) any later version.
 //
 //  This program is distributed in the hope that it will be useful,
@@ -13,8 +13,7 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ----------------------------------------------------------------------------
 
@@ -50,8 +49,10 @@ void Audiothr::thr_main (void)
     float      *buf;
     int        i, k;
 
+    // Interleaved buffer for channels 1 and 2.
     buf = new float [frsize * 2];
 
+    // Create and initialise the audio device.
     D = new Alsa_pcmi (playdev, captdev, 0, fsamp, frsize, nfrags, 0);
     if (D->state ()) 
     {
@@ -67,12 +68,22 @@ void Audiothr::thr_main (void)
     }
     D->printinfo ();
 
+    // Start the audio device.
     D->pcm_start ();
-    while (1)
+
+    // Main loop
+    while (true)
     {
 	k = D->pcm_wait ();  
+	if (k < frsize)
+	{
+	    // Normally we shouldn't do this in a real-time context.
+	    fprintf (stderr, "Error: pcm_wait returned %d.\n", k);
+	}
         while (k >= frsize)
        	{
+	    // Copy the first 2 inputs to the first two outputs.
+	    // Clear all other outputs.
             D->capt_init (frsize);
             D->capt_chan (0, buf + 0, frsize, 2);
             D->capt_chan (1, buf + 1, frsize, 2);              
@@ -87,6 +98,8 @@ void Audiothr::thr_main (void)
             k -= frsize;
 	}
     }
+
+    // Stop the audio device.
     D->pcm_stop ();
 
     delete D;
@@ -103,7 +116,7 @@ int main (int ac, char *av [])
 
     if (ac < 6)
     {
-	fprintf (stderr, "alsa-loopback <playdev><captdev><fsamp><frsize><nfrags>\n");
+	fprintf (stderr, "alsa-loopback <playdev> <captdev> <fsamp> <frsize> <nfrags>\n");
         return 1;
     }
 
@@ -113,6 +126,7 @@ int main (int ac, char *av [])
     frsize = atoi (av [4]);
     nfrags = atoi (av [5]);
 
+    // Run a real-time thread to handle audio.
     if (A.thr_start (SCHED_FIFO, -50, 0x20000))
     {
  	fprintf (stderr, "Can't run in RT mode, trying normal scheduling.\n");
