@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------------------
 #
-#  Copyright (C) 2006-2012 Fons Adriaensen <fons@linuxaudio.org>
+#  Copyright (C) 2006-2018 Fons Adriaensen <fons@linuxaudio.org>
 #    
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,18 +20,18 @@
 
 # Modify as required.
 #
-PREFIX = /usr/local
 SUFFIX := $(shell uname -m | sed -e 's/^unknown/$//' -e 's/^i.86/$//' -e 's/^x86_64/$/64/')
-LIBDIR = lib$(SUFFIX)
-
+PREFIX ?= /usr/local
+INCDIR ?= $(PREFIX)/include
+LIBDIR ?= $(PREFIX)/lib$(SUFFIX)
 
 MAJVERS = 0
-MINVERS = 2.0
+MINVERS = 3.2
 VERSION = $(MAJVERS).$(MINVERS)
 
-
-CPPFLAGS += -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS
-CXXFLAGS += -O2 -Wall -I. -fPIC
+CPPFLAGS += -DVERSION=\"$(VERSION)\" -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS
+CXXFLAGS += -O2 -Wall -fPIC
+CXXFLAGS += -march=native
 LDLFAGS +=
 LDLIBS +=
 
@@ -45,18 +45,20 @@ ZITA-ALSA-PCMI_H = zita-alsa-pcmi.h
 
 
 $(ZITA-ALSA-PCMI_MIN): $(ZITA-ALSA-PCMI_O)
-	g++ -shared $(LDFLAGS) -Wl,-soname,$(ZITA-ALSA-PCMI_MAJ) -o $(ZITA-ALSA-PCMI_MIN) $(ZITA-ALSA-PCMI_O) $(ZITA-ALSA-PCMI_DEP)
+	$(CXX) -shared $(LDFLAGS) -Wl,-soname,$(ZITA-ALSA-PCMI_MAJ) -o $(ZITA-ALSA-PCMI_MIN) $(ZITA-ALSA-PCMI_O) $(ZITA-ALSA-PCMI_DEP)
 
 
 install:	$(ZITA-ALSA-PCMI_MIN)
-	install -Dm 644 $(ZITA-ALSA-PCMI_H)   $(DESTDIR)$(PREFIX)/include/$(ZITA-ALSA-PCMI_H)
-	install -Dm 644 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_MIN)
-	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
+	install -d $(DESTDIR)$(INCDIR)
+	install -d $(DESTDIR)$(LIBDIR)
+	install -m 644 $(ZITA-ALSA-PCMI_H) $(DESTDIR)$(INCDIR)
+	install -m 755 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(LIBDIR)
 	ldconfig
+	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
 
 uninstall:
-	rm -rf $(DESTDIR)$(PREFIX)/include/zita-alsa-pcmi.h
-	rm -rf $(DESTDIR)$(PREFIX)/$(LIBDIR)/libzita-alsa-pcmi*
+	rm -rf $(DESTDIR)$(INCDIR)/$(ZITA-ALSA-PCMI_H)
+	rm -rf $(DESTDIR)$(LIBDIR)/libzita-alsa-pcmi*
 
 clean:
 	/bin/rm -f *~ *.o *.a *.d *.so.*

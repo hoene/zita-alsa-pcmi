@@ -1,10 +1,10 @@
 // ----------------------------------------------------------------------------
 //
-//  Copyright (C) 2003-2012 Fons Adriaensen <fons@linuxaudio.org>
+//  Copyright (C) 2006-2018 Fons Adriaensen <fons@linuxaudio.org>
 //    
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
+//  the Free Software Foundation; either version 3 of the License, or
 //  (at your option) any later version.
 //
 //  This program is distributed in the hope that it will be useful,
@@ -13,8 +13,7 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ----------------------------------------------------------------------------
 
@@ -39,7 +38,8 @@ class Audiothr : public Pxthread
 {
 public:
 
-    Audiothr (const char *playdev, const char *captdev, int fsamp, int frsize, int nfrags);
+    Audiothr (const char *playdev, const char *captdev,
+	      int fsamp, int frsize, int nfrags, int inp, int out);
     virtual ~Audiothr (void);
 
     void stop (void) { _stop = true; }
@@ -56,20 +56,27 @@ private:
     int         _frsize;
     float      *_ipbuf;
     float      *_opbuf;
+    int         _inp;
+    int         _out;
 };
 
 
-Audiothr::Audiothr (const char *playdev, const char *captdev, int fsamp, int frsize, int nfrags) :
+Audiothr::Audiothr (const char *playdev, const char *captdev,
+		    int fsamp, int frsize, int nfrags, int inp, int out) :
     _pcmi (0),
     _mtdm (0),
     _stop (true),
     _frsize (frsize),
     _ipbuf (0),
-    _opbuf (0)
+    _opbuf (0),
+    _inp (inp),
+    _out (out)
 {
     _mtdm  = new MTDM (fsamp);
     _ipbuf = new float [frsize];
     _opbuf = new float [frsize];
+
+    // Create and initialise the audio device.
     _pcmi = new Alsa_pcmi (playdev, captdev, 0, fsamp, frsize, nfrags, 0);
     if (_pcmi->state ()) 
     {
@@ -79,6 +86,8 @@ Audiothr::Audiothr (const char *playdev, const char *captdev, int fsamp, int frs
     }
     _pcmi->printinfo ();
     _stop = false;
+
+    // Run a real-time thread to process audio.
     if (thr_start (SCHED_FIFO, -20, 0x20000))
     {
  	fprintf (stderr, "Can't run in RT mode, trying normal scheduling.\n");
@@ -104,26 +113,42 @@ void Audiothr::thr_main (void)
 {
     int i, k;
 
+    // Start the audio device.
     _pcmi->pcm_start ();
+
+    // Main loop.
     while (!_stop)
     {
 	k = _pcmi->pcm_wait ();  
+	if (k < _frsize)
+	{
+	    // Normally we shouldn't do this in a real-time context.
+	    fprintf (stderr, "Error: pcm_wait returned %d.", k);
+	}
         while (k >= _frsize)
        	{
+	    // Read input signal.
             _pcmi->capt_init (_frsize);
-            _pcmi->capt_chan (0, _ipbuf, _frsize);
+            _pcmi->capt_chan (_inp, _ipbuf, _frsize);
             _pcmi->capt_done (_frsize);
 
+	    // Process.
 	    _mtdm->process (_frsize, _ipbuf, _opbuf);
 
+	    // Write output signal and clear all other outputs.
             _pcmi->play_init (_frsize);
-            _pcmi->play_chan (0, _opbuf, _frsize);              
-	    for (i = 1; i < _pcmi->nplay (); i++) _pcmi->clear_chan (i, _frsize);
+            _pcmi->play_chan (_out, _opbuf, _frsize);              
+	    for (i = 0; i < _pcmi->nplay (); i++)
+	    {
+		if (i != _out) _pcmi->clear_chan (i, _frsize);
+	    }
             _pcmi->play_done (_frsize);
 
             k -= _frsize;
 	}
     }
+
+    // Stop the audio device.
     _pcmi->pcm_stop ();
 }
 
@@ -137,24 +162,24 @@ static void sigint_handler (int)
 
 int main (int ac, char *av [])
 {
-    int       fsamp;
-    int       frsize;
-    int       nfrags;
+    int       fsamp, frsize, nfrags, inp, out;
     MTDM     *mtdm;
     float     t;
-    
 
-    if (ac < 6)
+    if (ac < 8)
     {
-	fprintf (stderr, "alsa-latency <playdev><captdev><fsamp><frsize><nfrags>\n");
+	fprintf (stderr, "alsa-delay <playdev> <captdev> <fsamp> <frsize> <nfrags> <input> <output>\n");
+	fprintf (stderr, "Input and output numbers start at 1.\n");
         return 1;
     }
 
     fsamp = atoi (av [3]);
     frsize = atoi (av [4]);
     nfrags = atoi (av [5]);
-
-    audio = new Audiothr (av [1], av [2], fsamp, frsize, nfrags);
+    inp = atoi (av [6]) - 1;
+    out = atoi (av [7]) - 1;
+    
+    audio = new Audiothr (av [1], av [2], fsamp, frsize, nfrags, inp, out);
     mtdm = audio->mtdm ();
     t = 1000.0f / fsamp;
 

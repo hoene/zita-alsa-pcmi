@@ -1,6 +1,6 @@
-// ----------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------
 //
-//  Copyright (C) 2006-2012 Fons Adriaensen <fons@linuxaudio.org>
+//  Copyright (C) 2006-2018 Fons Adriaensen <fons@linuxaudio.org>
 //    
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 
 #define ZITA_ALSA_PCMI_MAJOR_VERSION 0
-#define ZITA_ALSA_PCMI_MINOR_VERSION 2
+#define ZITA_ALSA_PCMI_MINOR_VERSION 3
 
 
 extern int zita_alsa_pcmi_major_version (void);
@@ -41,23 +41,23 @@ public:
 
     Alsa_pcmi (const char        *play_name,
                const char        *capt_name,
-   	       const char        *ctrl_name,
+               const char        *ctrl_name,
                unsigned int       rate,
                unsigned int       frsize,
                unsigned int       nfrags,
-	       unsigned int       debug = 0);
+               unsigned int       debug = 0);
 
     ~Alsa_pcmi (void);  
 
     enum 
     {
-	DEBUG_INIT = 1,
-	DEBUG_STAT = 2,
-	DEBUG_WAIT = 4,
-	DEBUG_DATA = 8,
-	DEBUG_ALL  = 15,
-	FORCE_16B  = 256,
-	FORCE_2CH  = 512
+        DEBUG_INIT = 1,
+        DEBUG_STAT = 2,
+        DEBUG_WAIT = 4,
+        DEBUG_DATA = 8,
+        DEBUG_ALL  = 15,
+        FORCE_16B  = 256,
+        FORCE_2CH  = 512
     };
 
     void printinfo (void);
@@ -78,26 +78,26 @@ public:
 
     int play_avail (void)
     {
-	return snd_pcm_avail (_play_handle);
+        return snd_pcm_avail (_play_handle);
     }
 
     int capt_avail (void)
     {
-	return snd_pcm_avail (_capt_handle);
+        return snd_pcm_avail (_capt_handle);
     }
 
     int play_delay (void)
     {
-	long k;
-	snd_pcm_delay (_play_handle, &k);
-	return k;
+        long k;
+        snd_pcm_delay (_play_handle, &k);
+        return k;
     }
 
     int capt_delay (void)
     {
-	long k;
-	snd_pcm_delay (_capt_handle, &k);
-	return k;
+        long k;
+        snd_pcm_delay (_capt_handle, &k);
+        return k;
     }
 
     float play_xrun (void) const { return _play_xrun; }
@@ -119,7 +119,7 @@ private:
     typedef char *(Alsa_pcmi::*play_function)(const float *, char *, int, int);
     typedef const char *(Alsa_pcmi::*capt_function) (const char *, float *, int, int);
 
-    enum { MAXPFD = 16, MAXCHAN = 64 };
+    enum { MAXPFD = 16, MAXCHAN = 256 };
 
     void initialise (const char *play_name, const char *capt_name, const char *ctrl_name);
     int set_hwpar (snd_pcm_t *handle, snd_pcm_hw_params_t *hwpar, const char *sname, unsigned int *nchan);
@@ -147,6 +147,7 @@ private:
     const char *capt_24swap (const char *src, float *dst, int nfrm, int step);
     const char *capt_16swap (const char *src, float *dst, int nfrm, int step);
 
+    
     unsigned int           _fsamp;
     snd_pcm_uframes_t      _fsize;
     unsigned int           _nfrag;
