@@ -1,36 +1,33 @@
 Description: Make apps build with the libraries built by the same package.
 Author: Alessio Treglia <alessio@debian.org> Forwarded: no ---
 Forwarded: no
----
- apps/Makefile |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- zita-alsa-pcmi.orig/apps/Makefile
-+++ zita-alsa-pcmi/apps/Makefile
-@@ -24,7 +24,7 @@ SUFFIX := $(shell uname -m | sed -e 's/^
- LIBDIR ?= lib$(SUFFIX)
- VERSION = "0.1.0"
- LDFLAGS += -L$(PREFIX)/$(LIBDIR)
--CPPFLAGS += -DVERSION=\"$(VERSION)\"
-+CPPFLAGS += -DVERSION=\"$(VERSION)\" -I../libs
- CXXFLAGS += -O2 -Wall -MMD -MP
+--- a/apps/Makefile
++++ b/apps/Makefile
+@@ -24,7 +24,7 @@
+ BINDIR ?= $(PREFIX)/bin
+ 
+ VERSION = "0.3.2"
+-CPPFLAGS +=  -MMD -MP -DVERSION=\"$(VERSION)\"
++CPPFLAGS +=  -MMD -MP -DVERSION=\"$(VERSION)\" -I$(DESTDIR)$(PREFIX)/include -I../source
+ CXXFLAGS += -O2 -Wall
  
  
-@@ -32,7 +32,7 @@ all:	alsa_loopback alsa_delay
+@@ -32,7 +32,7 @@
  
  
  ALSA_LOOPBACK_O =	alsa_loopback.o pxthread.o
 -alsa_loopback:	LDLIBS += -lzita-alsa-pcmi -lasound -lpthread -lrt
-+alsa_loopback:	LDLIBS += ../libs/libzita-alsa-pcmi.so.0.2.0 -lasound -lpthread -lrt
++alsa_loopback:	LDLIBS += ../source/libzita-alsa-pcmi.so.0.3.2 -lasound -lpthread -lrt
  alsa_loopback:	$(ALSA_LOOPBACK_O)
- 	g++ $(LDFLAGS) -o $@ $(ALSA_LOOPBACK_O) $(LDLIBS)
+ 	$(CXX) $(LDFLAGS) -o $@ $(ALSA_LOOPBACK_O) $(LDLIBS)
  $(ALSA_LOOPBACK_O):
-@@ -40,7 +40,7 @@ $(ALSA_LOOPBACK_O):
+@@ -40,7 +40,7 @@
  
  
  ALSA_DELAY_O =	alsa_delay.o mtdm.o pxthread.o
 -alsa_delay:	LDLIBS += -lzita-alsa-pcmi -lasound -lpthread -lrt
-+alsa_delay:	LDLIBS += ../libs/libzita-alsa-pcmi.so.0.2.0 -lasound -lpthread -lrt
++alsa_delay:	LDLIBS += ../source/libzita-alsa-pcmi.so.0.3.2 -lasound -lpthread -lrt
  alsa_delay:	$(ALSA_DELAY_O)
- 	g++ $(LDFLAGS) -o $@ $(ALSA_DELAY_O) $(LDLIBS)
+ 	$(CXX) $(LDFLAGS) -o $@ $(ALSA_DELAY_O) $(LDLIBS)
  $(ALSA_DELAY_O):
