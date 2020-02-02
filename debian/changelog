@@ -22,8 +22,9 @@ zita-alsa-pcmi (0.3.2-1) UNRELEASED; urgency=medium
   * d/rules: Replace libs/ with source/
   * d/source/local-options: Drop, obsolete
   * d/watch: Use https protocol
+  * Fix zita-alsa-pcmi-utils.install
 
- -- Dennis Braun <d_braun@kabelmail.de>  Sun, 02 Feb 2020 18:49:19 +0100
+ -- Dennis Braun <d_braun@kabelmail.de>  Sun, 02 Feb 2020 21:48:21 +0100
 
 zita-alsa-pcmi (0.2.0-4) unstable; urgency=medium
 

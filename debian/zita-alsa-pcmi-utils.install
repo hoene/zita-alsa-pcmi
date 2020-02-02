@@ -1,1 +1,2 @@
-usr/bin
+apps/alsa_delay usr/bin/
+apps/alsa_loopback usr/bin
