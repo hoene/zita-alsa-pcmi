@@ -1,3 +1,29 @@
+zita-alsa-pcmi (0.3.2-1) UNRELEASED; urgency=medium
+
+  * Team upload
+
+  [ Felipe Sateler ]
+  * Change maintainer address to debian-multimedia@lists.debian.org
+
+  [ Ondřej Nový ]
+  * Use debhelper-compat instead of debian/compat
+  * d/control: Set Vcs-* to salsa.debian.org
+  * d/copyright: Use https protocol in Format field
+
+  [ Dennis Braun ]
+  * New upstream version 0.3.2
+  * d/control:
+    + Bump dh-compat to 12
+    + Bump Standards-Version to 4.5.0
+    + Set RRR: no
+  * d/copyright: Update year, http > https & add myself
+  * d/patches: Update patchset
+  * d/rules: Replace libs/ with source/
+  * d/source/local-options: Drop, obsolete
+  * d/watch: Use https protocol
+
+ -- Dennis Braun <d_braun@kabelmail.de>  Sun, 02 Feb 2020 18:49:19 +0100
+
 zita-alsa-pcmi (0.2.0-4) unstable; urgency=medium
 
   * Set dh/compat 10.
