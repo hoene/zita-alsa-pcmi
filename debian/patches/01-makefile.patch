@@ -1,48 +1,37 @@
 Description: 
- Patch is applied to set PREFIX, LIBDIR and DESTDIR by rules file.
- Also fixing ldconfig
+ Patch is applied to fix several build issues
 Author: Jaromír Mikeš <mira.mikes@seznam.cz>
+Author: Dennis Braun <d_braun@kabelmail.de>
+Last-Update: 2020-02-02
 Forwarded: no
 
----
- apps/Makefile |    4 ++--
- libs/Makefile |    6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
---- zita-alsa-pcmi.orig/libs/Makefile
-+++ zita-alsa-pcmi/libs/Makefile
-@@ -20,9 +20,9 @@
+--- a/source/Makefile
++++ b/source/Makefile
+@@ -31,7 +31,6 @@
  
- # Modify as required.
- #
--PREFIX = /usr/local
-+PREFIX ?= /usr/local
- SUFFIX := $(shell uname -m | sed -e 's/^unknown/$//' -e 's/^i.86/$//' -e 's/^x86_64/$/64/')
--LIBDIR = lib$(SUFFIX)
-+LIBDIR ?= lib$(SUFFIX)
+ CPPFLAGS += -DVERSION=\"$(VERSION)\" -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS
+ CXXFLAGS += -O2 -Wall -fPIC
+-CXXFLAGS += -march=native
+ LDLFAGS +=
+ LDLIBS +=
+ 
+@@ -45,7 +44,7 @@
  
  
- MAJVERS = 0
-@@ -52,7 +52,7 @@ install:	$(ZITA-ALSA-PCMI_MIN)
- 	install -Dm 644 $(ZITA-ALSA-PCMI_H)   $(DESTDIR)$(PREFIX)/include/$(ZITA-ALSA-PCMI_H)
- 	install -Dm 644 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_MIN)
- 	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
+ $(ZITA-ALSA-PCMI_MIN): $(ZITA-ALSA-PCMI_O)
+-	$(CXX) -shared $(LDFLAGS) -Wl,-soname,$(ZITA-ALSA-PCMI_MAJ) -o $(ZITA-ALSA-PCMI_MIN) $(ZITA-ALSA-PCMI_O) $(ZITA-ALSA-PCMI_DEP)
++	$(CXX) $(LDFLAGS) -shared -Wl,-soname,$(ZITA-ALSA-PCMI_MAJ) -o $(ZITA-ALSA-PCMI_MIN) $(ZITA-ALSA-PCMI_O) $(ZITA-ALSA-PCMI_DEP)
+ 
+ 
+ install:	$(ZITA-ALSA-PCMI_MIN)
+@@ -53,8 +52,8 @@
+ 	install -d $(DESTDIR)$(LIBDIR)
+ 	install -m 644 $(ZITA-ALSA-PCMI_H) $(DESTDIR)$(INCDIR)
+ 	install -m 755 $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(LIBDIR)
 -	ldconfig
-+	/sbin/ldconfig -n $(DESTDIR)$(PREFIX)/$(LIBDIR)
+-	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
++	ln -sf $(ZITA-ALSA-PCMI_MIN) $(DESTDIR)$(LIBDIR)/$(ZITA-ALSA-PCMI_MAJ)
++	ln -sf $(ZITA-ALSA-PCMI_MAJ) $(DESTDIR)$(LIBDIR)/$(ZITA-ALSA-PCMI_SO)
  
  uninstall:
- 	rm -rf $(DESTDIR)$(PREFIX)/include/zita-alsa-pcmi.h
---- zita-alsa-pcmi.orig/apps/Makefile
-+++ zita-alsa-pcmi/apps/Makefile
-@@ -19,9 +19,9 @@
- # ----------------------------------------------------------------------------
- 
- 
--PREFIX = /usr/local
-+PREFIX ?= /usr/local
- SUFFIX := $(shell uname -m | sed -e 's/^unknown/$//' -e 's/^i.86/$//' -e 's/^x86_64/$/64/')
--LIBDIR = lib$(SUFFIX)
-+LIBDIR ?= lib$(SUFFIX)
- VERSION = "0.1.0"
- LDFLAGS += -L$(PREFIX)/$(LIBDIR)
- CPPFLAGS += -DVERSION=\"$(VERSION)\"
+ 	rm -rf $(DESTDIR)$(INCDIR)/$(ZITA-ALSA-PCMI_H)
