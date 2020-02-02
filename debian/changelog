@@ -16,6 +16,7 @@ zita-alsa-pcmi (0.3.2-1) UNRELEASED; urgency=medium
     + Bump dh-compat to 12
     + Bump Standards-Version to 4.5.0
     + Set RRR: no
+    + Use https protocol for homepage
   * d/copyright: Update year, http > https & add myself
   * d/patches: Update patchset
   * d/rules: Replace libs/ with source/

@@ -9,7 +9,7 @@ Build-Depends:
 Standards-Version: 4.5.0
 Vcs-Git: https://salsa.debian.org/multimedia-team/zita-alsa-pcmi.git
 Vcs-Browser: https://salsa.debian.org/multimedia-team/zita-alsa-pcmi
-Homepage: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
+Homepage: https://kokkinizita.linuxaudio.org/linuxaudio/downloads/index.html
 Rules-Requires-Root: no
 
 Package: libzita-alsa-pcmi-dev
