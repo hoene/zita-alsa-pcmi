@@ -2,10 +2,8 @@ Description:  Fix spelling error
 Author: Jaromír Mikeš <mira.mikes@seznam.cz>
 Forwarded: no
 
-Index: zita-alsa-pcmi/libs/zita-alsa-pcmi.cc
-===================================================================
---- zita-alsa-pcmi.orig/libs/zita-alsa-pcmi.cc
-+++ zita-alsa-pcmi/libs/zita-alsa-pcmi.cc
+--- a/source/zita-alsa-pcmi.cc
++++ b/source/zita-alsa-pcmi.cc
 @@ -708,7 +708,7 @@ int Alsa_pcmi::set_hwpar (snd_pcm_t *han
      snd_pcm_hw_params_get_channels_max (hwpar, nchan);
      if (*nchan > 1024)
