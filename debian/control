@@ -2,7 +2,9 @@ Source: zita-alsa-pcmi
 Section: sound
 Priority: optional
 Maintainer: Debian Multimedia Maintainers <debian-multimedia@lists.debian.org>
-Uploaders: Jaromír Mikeš <mira.mikes@seznam.cz>
+Uploaders:
+ Dennis Braun <d_braun@kabelmail.de>,
+ Jaromír Mikeš <mira.mikes@seznam.cz>
 Build-Depends:
  debhelper-compat (= 12),
  libasound2-dev
