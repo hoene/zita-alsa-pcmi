@@ -1,5 +1,5 @@
 Description: Make apps build with the libraries built by the same package.
-Author: Alessio Treglia <alessio@debian.org> Forwarded: no ---
+Author: Alessio Treglia <alessio@debian.org>
 Forwarded: no
 
 --- a/apps/Makefile
@@ -9,7 +9,7 @@ Forwarded: no
  
  VERSION = "0.3.2"
 -CPPFLAGS +=  -MMD -MP -DVERSION=\"$(VERSION)\"
-+CPPFLAGS +=  -MMD -MP -DVERSION=\"$(VERSION)\" -I$(DESTDIR)$(PREFIX)/include -I../source
++CPPFLAGS +=  -MMD -MP -DVERSION=\"$(VERSION)\" -I../debian/tmp/usr/include -I../source
  CXXFLAGS += -O2 -Wall
  
  

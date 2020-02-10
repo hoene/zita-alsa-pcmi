@@ -11,8 +11,8 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@ -Smakefile
 
 override_dh_auto_build:
-	$(MAKE) -C source/
-	$(MAKE) -C apps/
+	dh_auto_build --sourcedirectory=source
+	dh_auto_build --sourcedirectory=apps
 
 override_dh_auto_clean:
 	dh_auto_clean
