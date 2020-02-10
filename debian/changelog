@@ -1,3 +1,14 @@
+zita-alsa-pcmi (0.3.2-1.1) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: Let dh_auto_build pass cross tools to make.
+    (Closes: #950750)
+
+  [ Dennis Braun ]
+  * Add me as uploader
+
+ -- Dennis Braun <d_braun@kabelmail.de>  Mon, 10 Feb 2020 18:45:22 +0100
+
 zita-alsa-pcmi (0.3.2-1) unstable; urgency=medium
 
   * Team upload
